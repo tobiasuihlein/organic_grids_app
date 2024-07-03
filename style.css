@@ -1,0 +1,38 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+}
+
+.grid-element {
+    background-color: #6082b6;
+}
+
+.row,
+.grid-element {
+    flex: 1;
+
+    /* add transitions for smooth change of the grid */
+    /* play around with transition time */
+    -webkit-transition: flex 2s ease-out;
+    -moz-transition: flex 2s ease-out;
+    -ms-transition: flex 2s ease-out;
+    -o-transition: flex 2s ease-out;
+    transition: flex 2s ease-out;
+}
+
+.row:hover {
+    flex: 4;
+}
+.grid-element:hover {
+    flex: 6;
+    opacity: 0.5;
+}
