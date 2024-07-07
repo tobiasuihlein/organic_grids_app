@@ -1,6 +1,15 @@
-.container {
-    width: 100vw;
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 1200px;
+    height: 500px;
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -13,7 +22,9 @@
 }
 
 .grid-element {
-    background-color: #6082b6;
+    background-color: pink;
+    opacity: 1;
+    border-radius: 10000px;
 }
 
 .row,
@@ -30,9 +41,10 @@
 }
 
 .row:hover {
-    flex: 4;
+    flex: 6;
+    opacity: 0.8;
 }
 .grid-element:hover {
     flex: 6;
-    opacity: 0.5;
+    opacity: 0.3;
 }
