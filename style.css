@@ -8,8 +8,8 @@ body {
 }
 
 .container {
-    width: 1200px;
-    height: 500px;
+    width: 900px;
+    height: 600px;
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -24,7 +24,8 @@ body {
 .grid-element {
     background-color: pink;
     opacity: 1;
-    border-radius: 10000px;
+    border-radius: 0px;
+    background-size: cover;
 }
 
 .row,
@@ -33,18 +34,18 @@ body {
 
     /* add transitions for smooth change of the grid */
     /* play around with transition time */
-    -webkit-transition: flex 2s ease-out;
-    -moz-transition: flex 2s ease-out;
-    -ms-transition: flex 2s ease-out;
-    -o-transition: flex 2s ease-out;
-    transition: flex 2s ease-out;
+    -webkit-transition: flex 1s ease-out;
+    -moz-transition: flex 1s ease-out;
+    -ms-transition: flex 1s ease-out;
+    -o-transition: flex 1s ease-out;
+    transition: flex 1s ease-out;
 }
 
 .row:hover {
-    flex: 6;
-    opacity: 0.8;
+    flex: 2;
+    opacity: 1;
 }
 .grid-element:hover {
-    flex: 6;
-    opacity: 0.3;
+    flex: 3;
+    opacity: 1;
 }
