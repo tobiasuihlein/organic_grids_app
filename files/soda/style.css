@@ -1,0 +1,51 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 900px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+}
+
+.grid-element {
+    background-color: pink;
+    opacity: 1;
+    border-radius: 0px;
+    background-size: cover;
+}
+
+.row,
+.grid-element {
+    flex: 1;
+
+    /* add transitions for smooth change of the grid */
+    /* play around with transition time */
+    -webkit-transition: flex 1s ease-out;
+    -moz-transition: flex 1s ease-out;
+    -ms-transition: flex 1s ease-out;
+    -o-transition: flex 1s ease-out;
+    transition: flex 1s ease-out;
+}
+
+.row:hover {
+    flex: 2;
+    opacity: 1;
+}
+.grid-element:hover {
+    flex: 3;
+    opacity: 1;
+}
