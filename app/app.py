@@ -18,6 +18,7 @@ html_code = f"""
 """
 components.html(html_code, height=60)
 
+clear_folder("../img_cache")
 
 
 with st.container():
@@ -55,7 +56,7 @@ with st.container():
             img_name = uploaded_file.name.split('.')[0]
 
             # Create a directory to save the uploaded file
-            save_dir = f'../files/{img_name}-{rows}-{cols}'
+            save_dir = f'../img_cache/{img_name}-{rows}-{cols}'
             os.makedirs(save_dir, exist_ok=True)
 
             # Save the file
