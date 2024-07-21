@@ -19,32 +19,29 @@ html_code = f"""
 components.html(html_code, height=60)
 
 
+
 with st.container():
 
-    col1, col2, col3, col4 = st.columns([1, 1, 2, 1])
+    col1, col2, col3, col4 = st.columns([1, 1, 1, 1])
 
     with col2: rows = st.number_input(label="Number of rows", min_value=1, max_value=10, value=4)
 
-    with col2: cols = st.number_input(label="Number of columns", min_value=1, max_value=10, value=4, step=1)
+    with col2: transition_size = st.slider(label="Transition size", min_value=0.1, max_value=10.0, value=2.0, step=0.1)
 
-    with col2: transition_speed = st.slider(label="Transition speed", min_value=0.1, max_value=10.0, value=1.0, step=0.1)
+    with col3: cols = st.number_input(label="Number of columns", min_value=1, max_value=10, value=4, step=1)
 
+    with col3: transition_speed = st.slider(label="Transition speed", min_value=0.1, max_value=10.0, value=1.0, step=0.1)
     transition_speed = 1 / transition_speed
-
-    with col3:
-
-        # Upload image file
-        uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
 
 with st.container():
 
-    col1, col2, col3 = st.columns([1, 3, 1])
+    col1, col2, col3 = st.columns([1, 2, 1])
 
-    #with col3:
+    with col2:
 
         # Upload image file
-        #uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+        uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
 
 with st.container():
@@ -67,5 +64,6 @@ with st.container():
                 f.write(bytes_data)
 
             split_uploaded_image(uploaded_file.name, rows, cols)
-            html_code = create_html_with_style(uploaded_file.name, rows, cols, transition_speed)
+            html_code = create_html_with_style(uploaded_file.name, rows, cols, transition_speed, transition_size)
+            components.html("", height=30)
             components.html(html_code, height=600)

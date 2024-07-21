@@ -104,8 +104,8 @@ def split_uploaded_image(img, rows, cols):
             piece_path = os.path.join(output_folder, piece_filename)
             piece.save(piece_path)
 
-def create_stylesheet(img_name, rows, cols, transition_speed):
-    style_content = f"body {{ display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: Arial, sans-serif; }} .container {{ width: 900px; height: 600px; display: flex; flex-direction: column; gap: 2px; }} .row {{ display: flex; flex-direction: row; gap: 2px; }} .grid-element {{ background-color: pink; opacity: 1; border-radius: 0px; background-size: cover; }} .row, .grid-element {{ flex: 1; -webkit-transition: flex {transition_speed}s ease-out; -moz-transition: flex {transition_speed}s ease-out; -ms-transition: flex {transition_speed}s ease-out; -o-transition: flex {transition_speed}s ease-out; transition: flex {transition_speed}s ease-out; }} .row:hover {{ flex: 2; opacity: 1; }} .grid-element:hover {{ flex: 3; opacity: 1; }}"
+def create_stylesheet(img_name, rows, cols, transition_speed, transition_size):
+    style_content = f"body {{ display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: Arial, sans-serif; }} .container {{ width: 900px; height: 600px; display: flex; flex-direction: column; gap: 2px; }} .row {{ display: flex; flex-direction: row; gap: 2px; }} .grid-element {{ background-color: pink; opacity: 1; border-radius: 0px; background-size: cover; }} .row, .grid-element {{ flex: 1; -webkit-transition: flex {transition_speed}s ease-out; -moz-transition: flex {transition_speed}s ease-out; -ms-transition: flex {transition_speed}s ease-out; -o-transition: flex {transition_speed}s ease-out; transition: flex {transition_speed}s ease-out; }} .row:hover {{ flex: {transition_size}; opacity: 1; }} .grid-element:hover {{ flex: {transition_size}; opacity: 1; }}"
 
     # define folder and file name for output html-file
     output_folder = f'../files/{img_name}-{rows}-{cols}'
@@ -122,17 +122,17 @@ def get_base64_encoded_image(image_path):
     with open(image_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode()
 
-def create_html_with_style(img, rows, cols, transition_speed):
+def create_html_with_style(img, rows, cols, transition_speed, transition_size):
 
     img_name = img.split('.')[0]
     img_type = img.split('.')[1]
 
-    style = create_stylesheet(img_name, rows, cols, transition_speed)
+    style = create_stylesheet(img_name, rows, cols, transition_speed, transition_size)
 
     html_output = f"""
     <!DOCTYPE html>
     <html>
-    <title>{img_name}</title>'
+    <title>{img_name}</title>
     <style>{style}</style>
     </head>
     <body>
