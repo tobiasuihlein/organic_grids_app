@@ -1,3 +1,4 @@
-streamlitbase64
+streamlit
+base64
 PIL
 io
