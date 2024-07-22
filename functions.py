@@ -1,7 +1,8 @@
 from PIL import Image
 import os
 import base64
-import shutil
+import io
+import requests
 
 def split_uploaded_image(img, rows, cols):
 
@@ -76,15 +77,55 @@ def create_html_with_style(img, rows, cols, transition_speed, transition_size):
 
     return html_output
 
-def clear_folder(folder_path):
-    for filename in os.listdir(folder_path):
-        file_path = os.path.join(folder_path, filename)
-        try:
-            if os.path.isfile(file_path) or os.path.islink(file_path):
-                os.unlink(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
-        except Exception as e:
-            print(f'Failed to delete {file_path}. Reason: {e}')
+
+def split_image_and_create_html_output(img, img_type, rows, cols, transition_speed, transition_size):
+
+    img_width, img_height = img.size
+
+    style = create_stylesheet(transition_speed, transition_size)
+
+    html_output = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <style>{style}</style>
+    </head>
+    <body>
+    <div class="container">
+    """
+
+    # Split image and create html output
+    piece_width = img_width // cols    # Calculate size of pieces
+    piece_height = img_height // rows
+
+    for row in range(rows):
+        html_output += '<div class="row">'
+        for col in range(cols):
+
+            # Split image
+            left = col * piece_width
+            top = row * piece_height
+            right = (col + 1) * piece_width
+            bottom = (row + 1) * piece_height
+            box = (left, top, right, bottom)
+            piece = img.crop(box)
+
+            image_bytes_io = io.BytesIO()
+
+            # Convert RGBA image to RGB
+            if img_type == 'png':
+                piece = piece.convert("RGB")
+
+            piece.save(image_bytes_io, format="JPEG")
+            base64_image = base64.b64encode(image_bytes_io.getvalue()).decode('utf-8')
+
+            html_output += '<div class="grid-element", '
+            html_output += 'style="background-image:'
+            html_output += f"url('data:image/jpeg;base64,{base64_image}')"
+            html_output += '"></div>'
+        html_output += '</div>'
+
+    html_output += '</div></body></html>'
+    return html_output
 
     
