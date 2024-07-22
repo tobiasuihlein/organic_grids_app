@@ -21,21 +21,6 @@ html_code = f"""
 """
 components.html(html_code, height=60)
 
-def fetch_image_from_url(url):
-    # Download the image
-    response = requests.get(url)
-    response.raise_for_status()  # Check for request errors
-    
-    # Convert the image to a BytesIO object
-    image_bytes = io.BytesIO(response.content)
-    
-    # Optionally open it with PIL to ensure it's a valid image
-    img = Image.open(image_bytes)
-    
-    # Reset the BytesIO pointer to the beginning
-    image_bytes.seek(0)
-    
-    return image_bytes, img.format
 
 # Create widgets to specify grid properties by user input
 with st.container():
