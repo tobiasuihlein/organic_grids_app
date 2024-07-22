@@ -23,11 +23,11 @@ components.html(html_code, height=60)
 with st.container():
     col1, col2, col3, col4 = st.columns([1, 1, 1, 1])
 
-    with col2: rows = st.number_input(label="Number of rows", min_value=1, max_value=10, value=4)
-    with col2: transition_size = st.slider(label="Transition size", min_value=0.1, max_value=10.0, value=2.0, step=0.1)
+    with col2: rows = st.number_input(label="Number of rows", min_value=1, max_value=10, value=4, step=1)
+    with col2: transition_size = st.slider(label="Transition size", min_value=0.1, max_value=5.0, value=2.5, step=0.1)
 
-    with col3: cols = st.number_input(label="Number of columns", min_value=1, max_value=10, value=4, step=1)
-    with col3: transition_speed = st.slider(label="Transition speed", min_value=0.1, max_value=10.0, value=1.0, step=0.1)
+    with col3: cols = st.number_input(label="Number of columns", min_value=1, max_value=10, value=6, step=1)
+    with col3: transition_speed = st.slider(label="Transition speed", min_value=0.1, max_value=5.0, value=2.5, step=0.1)
     transition_speed = 1 / transition_speed
 
 # Upload image file
