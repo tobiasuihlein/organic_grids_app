@@ -22,16 +22,41 @@ html_code = f"""
 #components.html(html_code, height=60)
 
 
-# Create widget for image upload
-with st.container():
-    col1, col2, col3 = st.columns([1.5, 1.5, 1.5])
 
-    with col2: uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+css_streamlit = '''
+<style>
+    [data-testid='stFileUploader'] {
+        width: max-content;
+    }
+    [data-testid='stFileUploader'] section {
+        padding: 0;
+        float: right;
+    }
+    [data-testid='stFileUploader'] section > input + div {
+        display: none;
+    }
+    [data-testid='stFileUploader'] section + div {
+        float: right;
+        padding-top: 0;
+    }
+
+</style>
+'''
+
+st.markdown(css_streamlit, unsafe_allow_html=True)
+
 
 
 # Create widgets to specify grid properties by user input
 with st.container():
     col1, col2, col3, col4, col5, col6, col7 = st.columns([0.3, 0.65, 0.05, 3, 0.05, 0.65, 0.3])
+
+    with col2:
+        if st.button('New random photo'):
+            del st.session_state['image_fetched']
+            st.rerun()
+    with col2: uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+
 
     with col6: rows = st.number_input(label="Number of rows", min_value=1, max_value=15, value=5, step=1)
     with col6: cols = st.number_input(label="Number of columns", min_value=1, max_value=15, value=8, step=1)
@@ -40,10 +65,6 @@ with st.container():
     transition_speed_in = 1 / (transition_speed_in)**2
     with col6: transition_speed_out = st.slider(label="Transition speed out", min_value=0.1, max_value=3.0, value=1.0, step=0.1)
     transition_speed_out = 1 / (transition_speed_out)**2
-    with col6:
-        if st.button('New random photo'):
-            del st.session_state['image_fetched']
-            st.experimental_rerun()
 
     with col4:
 
