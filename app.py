@@ -53,6 +53,7 @@ with st.container():
         # Disply image in grid
         if uploaded_image is None:
             url = "https://images.unsplash.com/photo-1573147367786-a5a227916f0c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            url = "https://picsum.photos/800/600"
             img_bytes, img_type = fetch_image_from_url(url)
             bytes_data = img_bytes.read()
             
