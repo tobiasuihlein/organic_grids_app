@@ -40,6 +40,10 @@ with st.container():
     transition_speed_in = 1 / (transition_speed_in)**2
     with col6: transition_speed_out = st.slider(label="Transition speed out", min_value=0.1, max_value=3.0, value=1.0, step=0.1)
     transition_speed_out = 1 / (transition_speed_out)**2
+    with col6:
+        if st.button('New random photo'):
+            del st.session_state['image_fetched']
+            st.experimental_rerun()
 
     with col4:
 
@@ -52,10 +56,18 @@ with st.container():
 
         # Disply image in grid
         if uploaded_image is None:
-            url = "https://images.unsplash.com/photo-1573147367786-a5a227916f0c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            url = "https://picsum.photos/800/600"
-            img_bytes, img_type = fetch_image_from_url(url)
-            bytes_data = img_bytes.read()
+            #url = "https://images.unsplash.com/photo-1573147367786-a5a227916f0c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            
+            if 'image_fetched' not in st.session_state:
+                url = "https://picsum.photos/800/600"
+                img_bytes, img_type = fetch_image_from_url(url)
+                bytes_data = img_bytes.read()
+                st.session_state['image_fetched'] = True
+                st.session_state['image_bytes_data'] = bytes_data
+                st.session_state['image_type'] = img_type
+            else:
+                bytes_data = st.session_state['image_bytes_data']
+                img_type = st.session_state['image_type']
             
         else:
             bytes_data = uploaded_image.read()
