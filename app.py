@@ -19,26 +19,30 @@ html_code = f"""
         <h1 style="font-family: Raleway;">ORGANIC GRIDS</h1>
     </div>
 """
-components.html(html_code, height=60)
+#components.html(html_code, height=60)
 
 
 # Create widget for image upload
 with st.container():
-    col1, col2, col3 = st.columns([1, 3, 1])
+    col1, col2, col3 = st.columns([1.5, 1.5, 1.5])
+
     with col2: uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
 
 # Create widgets to specify grid properties by user input
 with st.container():
-    col1, col2, col3, col4, col5 = st.columns([1, 3, 0.05, 0.65, 0.3])
+    col1, col2, col3, col4, col5, col6, col7 = st.columns([0.3, 0.65, 0.05, 3, 0.05, 0.65, 0.3])
 
-    with col4: rows = st.number_input(label="Number of rows", min_value=1, max_value=10, value=4, step=1)
-    with col4: cols = st.number_input(label="Number of columns", min_value=1, max_value=10, value=6, step=1)
-    with col4: transition_size = st.slider(label="Transition size", min_value=0.1, max_value=5.0, value=2.5, step=0.1)
-    with col4: transition_speed = st.slider(label="Transition speed", min_value=0.1, max_value=5.0, value=2.5, step=0.1)
-    transition_speed = 1 / transition_speed
+    with col6: rows = st.number_input(label="Number of rows", min_value=1, max_value=15, value=5, step=1)
+    with col6: cols = st.number_input(label="Number of columns", min_value=1, max_value=15, value=8, step=1)
+    with col6: transition_size = st.slider(label="Transition size", min_value=0.1, max_value=10.0, value=2.5, step=0.1)
+    with col6: transition_speed_in = st.slider(label="Transition speed in", min_value=0.1, max_value=3.0, value=1.5, step=0.1)
+    transition_speed_in = 1 / (transition_speed_in)**2
+    with col6: transition_speed_out = st.slider(label="Transition speed out", min_value=0.1, max_value=3.0, value=1.0, step=0.1)
+    transition_speed_out = 1 / (transition_speed_out)**2
 
-    with col2:
+    with col4:
+
         # Set grid properties if no user input
         if rows is None:
             rows = 4
@@ -60,6 +64,6 @@ with st.container():
         img = Image.open(io.BytesIO(bytes_data))
         img_width, img_height = img.size
 
-        html_output = split_image_and_create_html_output(img, img_type, rows, cols, transition_speed, transition_size)
+        html_output = split_image_and_create_html_output(img, img_type, rows, cols, transition_speed_in, transition_speed_out, transition_size)
 
         components.html(html_output, height=600)

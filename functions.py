@@ -4,9 +4,45 @@ import base64
 import io
 import requests
 
-def create_stylesheet(transition_speed, transition_size):
+def create_stylesheet(transition_speed_in, transition_speed_out, transition_size):
     
-    style_content = f"body {{ display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: Arial, sans-serif; }} .container {{ width: 900px; height: 600px; display: flex; flex-direction: column; gap: 2px; }} .row {{ display: flex; flex-direction: row; gap: 2px; }} .grid-element {{ background-color: pink; opacity: 1; border-radius: 0px; background-size: cover; }} .row, .grid-element {{ flex: 1; -webkit-transition: flex {transition_speed}s ease-out; -moz-transition: flex {transition_speed}s ease-out; -ms-transition: flex {transition_speed}s ease-out; -o-transition: flex {transition_speed}s ease-out; transition: flex {transition_speed}s ease-out; }} .row:hover {{ flex: {transition_size}; opacity: 1; }} .grid-element:hover {{ flex: {transition_size}; opacity: 1; }}"
+    style_content = f"""
+    body {{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }}
+    .container {{
+        width: 900px;
+        height: 600px;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }}
+    .row {{
+        display: flex;
+        flex-direction: row;
+        gap: 2px;
+    }}
+    .grid-element {{
+        background-size: cover;
+    }}
+    .row, .grid-element {{
+        flex: 1;
+        transition: flex {transition_speed_out}s ease-out;
+    }}
+    .row:hover {{
+        flex: {transition_size};
+        transition: flex {transition_speed_in}s ease-out;
+    }}
+    .grid-element:hover {{
+        flex: {transition_size};
+        transition: flex {transition_speed_in}s ease-out;
+    }}
+    """
     
     return style_content
 
@@ -15,11 +51,11 @@ def get_base64_encoded_image(image_path):
     with open(image_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode()
 
-def split_image_and_create_html_output(img, img_type, rows, cols, transition_speed, transition_size):
+def split_image_and_create_html_output(img, img_type, rows, cols, transition_speed_in, transition_speed_out, transition_size):
 
     img_width, img_height = img.size
 
-    style = create_stylesheet(transition_speed, transition_size)
+    style = create_stylesheet(transition_speed_in, transition_speed_out, transition_size)
 
     html_output = f"""
     <!DOCTYPE html>
@@ -81,5 +117,3 @@ def fetch_image_from_url(url):
     image_bytes.seek(0)
     
     return image_bytes, img.format
-
-    
