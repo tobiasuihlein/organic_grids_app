@@ -39,34 +39,51 @@ css_streamlit = '''
         float: right;
         padding-top: 0;
     }
-
+    .block-container {
+        padding-top: 7vh;
+        padding-bottom: 0rem;
+        padding-left: 5rem;
+        padding-right: 5rem;
+    }
 </style>
 '''
 
 st.markdown(css_streamlit, unsafe_allow_html=True)
 
+st.markdown("""
+        <style>
+
+        </style>
+        """, unsafe_allow_html=True)
+
 
 
 # Create widgets to specify grid properties by user input
 with st.container():
-    col1, col2, col3, col4, col5, col6, col7 = st.columns([0.3, 0.65, 0.05, 3, 0.05, 0.65, 0.3])
+    col1, col2, col3 = st.columns([1, 4, 1])
 
-    with col2:
-        if st.button('New random photo'):
-            del st.session_state['image_fetched']
-            st.rerun()
-    with col2: uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
-
-
-    with col6: rows = st.number_input(label="Number of rows", min_value=1, max_value=15, value=5, step=1)
-    with col6: cols = st.number_input(label="Number of columns", min_value=1, max_value=15, value=8, step=1)
-    with col6: transition_size = st.slider(label="Transition size", min_value=0.1, max_value=10.0, value=2.5, step=0.1)
-    with col6: transition_speed_in = st.slider(label="Transition speed in", min_value=0.1, max_value=3.0, value=1.5, step=0.1)
+    with col1: rows = st.number_input(label="Number of rows", min_value=1, max_value=15, value=5, step=1)
+    with col1: cols = st.number_input(label="Number of columns", min_value=1, max_value=15, value=8, step=1)
+    with col1: grid_gap_width = st.number_input(label="Grid gap width", min_value=0, max_value=10, value=2, step=1)
+    with col1: components.html("", height=0)
+    with col1: transition_size = st.slider(label="Transition size", min_value=0.1, max_value=10.0, value=2.5, step=0.1)
+    with col1: transition_speed_in = st.slider(label="Transition speed in", min_value=0.1, max_value=3.0, value=1.5, step=0.1)
     transition_speed_in = 1 / (transition_speed_in)**2
-    with col6: transition_speed_out = st.slider(label="Transition speed out", min_value=0.1, max_value=3.0, value=1.0, step=0.1)
+    with col1: transition_speed_out = st.slider(label="Transition speed out", min_value=0.1, max_value=3.0, value=1.0, step=0.1)
     transition_speed_out = 1 / (transition_speed_out)**2
 
-    with col4:
+
+    with col3: uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"], key='image_uploaded')
+    with col3:
+        if st.button('New random photo'):
+            if 'image_fetched' in st.session_state:
+                del st.session_state['image_fetched']
+            if "image_uploaded" in st.session_state:
+                del st.session_state['image_uploaded']
+            st.rerun()
+
+
+    with col2:
 
         # Set grid properties if no user input
         if rows is None:
@@ -98,6 +115,7 @@ with st.container():
         img = Image.open(io.BytesIO(bytes_data))
         img_width, img_height = img.size
 
-        html_output = split_image_and_create_html_output(img, img_type, rows, cols, transition_speed_in, transition_speed_out, transition_size)
+        html_output = split_image_and_create_html_output(img, img_type, rows, cols, transition_speed_in, transition_speed_out, transition_size, grid_gap_width)
 
-        components.html(html_output, height=600)
+        display_height = 800 * img_height / img_width
+        components.html(html_output, height=display_height)

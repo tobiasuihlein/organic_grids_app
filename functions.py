@@ -4,7 +4,7 @@ import base64
 import io
 import requests
 
-def create_stylesheet(transition_speed_in, transition_speed_out, transition_size):
+def create_stylesheet(transition_speed_in, transition_speed_out, transition_size, grid_gap_width):
     
     style_content = f"""
     body {{
@@ -16,16 +16,16 @@ def create_stylesheet(transition_speed_in, transition_speed_out, transition_size
         font-family: Arial, sans-serif;
     }}
     .container {{
-        width: 900px;
-        height: 600px;
+        width: 800px;
+        height: 100%;
         display: flex;
         flex-direction: column;
-        gap: 2px;
+        gap: {grid_gap_width}px;
     }}
     .row {{
         display: flex;
         flex-direction: row;
-        gap: 2px;
+        gap: {grid_gap_width}px;
     }}
     .grid-element {{
         background-size: cover;
@@ -51,11 +51,11 @@ def get_base64_encoded_image(image_path):
     with open(image_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode()
 
-def split_image_and_create_html_output(img, img_type, rows, cols, transition_speed_in, transition_speed_out, transition_size):
+def split_image_and_create_html_output(img, img_type, rows, cols, transition_speed_in, transition_speed_out, transition_size, grid_gap_width):
 
     img_width, img_height = img.size
 
-    style = create_stylesheet(transition_speed_in, transition_speed_out, transition_size)
+    style = create_stylesheet(transition_speed_in, transition_speed_out, transition_size, grid_gap_width)
 
     html_output = f"""
     <!DOCTYPE html>
