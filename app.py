@@ -7,19 +7,32 @@ import io
 import requests
 import os
 
-st.set_page_config(layout="wide")
+st.set_page_config(page_title='Organic Grids Generator', layout="wide")
 
-html_code = f"""
+html_code = """
 <head>
-    <title>ORGANIC GRIDS</title>
-    <style>@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap')</style>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+    body {
+        font-family: Raleway;
+    }
+    a:link, a:visited {
+        color: #FF4B4B;
+        text-decoration: None;
+    }
+
+    a:link:active, a:visited:active {
+        color: black;
+    }
+    </style>
 </head>
 <body>
     <div style="text-align: center">
-        <h1 style="font-family: Raleway;">ORGANIC GRIDS</h1>
+        <h1 style="margin-bottom: 0;">ORGANIC GRIDS GENERATOR</h1>
+        <p style="margin-top: 5px; margin-bottom: 0px">based on an experiment by digital artist <a href="https://nahuelgerth.de/" target="_blank" rel="noopener noreferrer">Nahuel Gerth</a></p>
     </div>
+</body>
 """
-#components.html(html_code, height=60)
+components.html(html_code, height=85)
 
 
 
@@ -40,7 +53,7 @@ css_streamlit = '''
         padding-top: 0;
     }
     .block-container {
-        padding-top: 7vh;
+        padding-top: 5vh;
         padding-bottom: 0rem;
         padding-left: 5rem;
         padding-right: 5rem;
@@ -119,3 +132,32 @@ with st.container():
 
         display_height = 800 * img_height / img_width
         components.html(html_output, height=display_height)
+
+
+with st.container():
+
+    footer_html="""
+    <head>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+    body {
+        font-family: Raleway;
+    }
+    a:link, a:visited {
+        color: #FF4B4B;
+        text-decoration: None;
+    }
+    a:link:active, a:visited:active {
+        color: black;
+    }
+    </style>
+    </head>
+    <body>
+        <div style="text-align: center">
+            <br>
+            <br>
+            <p>Random photos fetched from <a href="https://unsplash.com/" target="_blank" rel="noopener noreferrer">Unsplash</a> via <a href="https://picsum.photos/" target="_blank" rel="noopener noreferrer">Lorem Picsum</a>.</p>
+        </div>
+    </body>
+    """
+
+    components.html(footer_html, height=150)
